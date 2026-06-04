@@ -17,10 +17,12 @@ function App() {
   const [selectedDate, setSelectedDate] =
       useState("");
 
-  const openDay = (date) => {
-    setSelectedDate(date);
-    setShowModal(true);
-  };
+    const [editingLesson, setEditingLesson] = useState(null);
+    const openDay = (date) => {
+        setEditingLesson(null);
+        setSelectedDate(date);
+        setShowModal(true);
+    };
 
   const addLesson = (lesson) => {
     setLessons([...lessons, lesson]);
@@ -38,27 +40,33 @@ function App() {
 
   return (
       <div className="max-w-7xl mx-auto p-6">
-        <h1 className="text-4xl font-bold mb-6">
-          Lesson Pay Calendar
-        </h1>
+          <h1 className="text-4xl font-bold text-black mb-6">
+              Lesson Pay Calendar
+          </h1>
 
-        <StatsCards lessons={lessons} />
+          <StatsCards lessons={lessons}/>
 
-        <CalendarView
-            lessons={lessons}
-            openDay={openDay}
-            togglePaid={togglePaid}
-        />
+          <CalendarView
+              lessons={lessons}
+              openDay={openDay}
+              togglePaid={togglePaid}
+              setEditingLesson={setEditingLesson}
+              setShowModal={setShowModal}
+          />
 
-        <StudentSummary lessons={lessons} />
+          <StudentSummary lessons={lessons}/>
 
-        {showModal && (
-            <LessonModal
-                selectedDate={selectedDate}
-                setShowModal={setShowModal}
-                addLesson={addLesson}
-            />
-        )}
+          {showModal && (
+              <LessonModal
+                  selectedDate={selectedDate}
+                  setShowModal={setShowModal}
+                  addLesson={addLesson}
+                  lessons={lessons}
+                  setLessons={setLessons}
+                  editingLesson={editingLesson}
+                  setEditingLesson={setEditingLesson}
+              />
+          )}
       </div>
   );
 }

@@ -2,6 +2,8 @@ export default function CalendarView({
                                          lessons,
                                          openDay,
                                          togglePaid,
+                                         setEditingLesson,
+                                         setShowModal,
                                      }) {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -43,14 +45,24 @@ export default function CalendarView({
                                     {lesson.student} - {lesson.amount} ₺
                                 </p>
 
-                                <button
-                                    className="text-xs bg-green-700 px-2 py-1 rounded mt-1"
-                                    onClick={() => togglePaid(lesson.id)}
-                                >
-                                    {lesson.paid
-                                        ? "Ödendi"
-                                        : "Ücret Alındı"}
-                                </button>
+                                <div className="flex gap-1 mt-1">
+                                    <button
+                                        className="text-xs bg-green-700 px-2 py-1 rounded"
+                                        onClick={() => togglePaid(lesson.id)}
+                                    >
+                                        {lesson.paid ? "Ödendi" : "Ücret Alındı"}
+                                    </button>
+
+                                    <button
+                                        className="text-xs bg-gray-600 px-2 py-1 rounded"
+                                        onClick={() => {
+                                            setEditingLesson(lesson);
+                                            setShowModal(true);
+                                        }}
+                                    >
+                                        ✏️
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
